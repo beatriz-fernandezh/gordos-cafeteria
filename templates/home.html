@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Cafetería Gordos ☕</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <h1>Bienvenid@ a Cafetería Gordos</h1>
+
+    <h2>Menú ☕</h2>
+
+    <a href="/products/create/">Agregar producto</a>
+
+    <ul>
+        {% for producto in productos %}
+            <li>
+                {{ producto.nombre }} - ${{ producto.precio }}
+{% if user.is_authenticated %}
+    <a href="/products/edit/{{ producto.id }}/">Editar</a>
+    <a href="/products/delete/{{ producto.id }}/">Eliminar</a>
+{% endif %}
+            </li>
+        {% empty %}
+            <li>No hay productos aún</li>
+        {% endfor %}
+    </ul>
+
+    <p>Hecho por Beatriz 💛</p>
+</body>
+</html>

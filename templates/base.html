@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Mi App{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar" style="background-color: #ffb6c1;">
+  <div class="container d-flex justify-content-between align-items-center">
+    <a class="navbar-brand" href="{% url 'home' %}">Gordos Cafetería ☕</a>
+    <div class="d-flex gap-2 align-items-center">
+      <a href="{% url 'view_cart' %}" class="btn btn-sm"
+         style="background-color:#fff;color:#d63384;border-radius:20px;">
+        🛒 Carrito
+      </a>
+      {% if user.is_authenticated %}
+        <span class="text-white" style="font-size:13px;">Hola, {{ user.username }}</span>
+<form method="post" action="{% url 'logout' %}" style="display:inline;">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-sm"
+          style="background-color:#d63384;color:white;border-radius:20px;border:none;">
+    Salir
+  </button>
+</form>
+        </a>
+      {% else %}
+        <a href="{% url 'login' %}" class="btn btn-sm"
+           style="background-color:#d63384;color:white;border-radius:20px;">
+          Iniciar sesión
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  {% block content %}
+  {% endblock %}
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Footer -->
+<footer style="background-color: #ffb6c1; margin-top: 3rem; padding: 16px 0; text-align: center;">
+    <p class="mb-0" style="color: white; font-size: 14px;">
+        ☕ Hecho con amor por Beatriz · Gordos Cafetería 2026
+    </p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

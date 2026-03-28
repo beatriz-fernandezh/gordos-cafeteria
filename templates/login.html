@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Iniciar sesión{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-4">
+    <h2 class="mb-4">Iniciar sesión ☕</h2>
+
+    {% if form.errors %}
+      <div class="alert alert-danger">
+        Usuario o contraseña incorrectos.
+      </div>
+    {% endif %}
+
+    <form method="post" class="card p-4 shadow-sm">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn w-100"
+        style="background-color:#ff69b4;color:white;border-radius:20px;">
+        Entrar
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

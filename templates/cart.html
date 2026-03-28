@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Carrito{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+  {% for msg in messages %}
+    <div class="alert alert-{{ msg.tags }}">{{ msg }}</div>
+  {% endfor %}
+{% endif %}
+
+<h2 class="mb-4">Tu carrito 🛒</h2>
+
+{% if productos %}
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Precio unit.</th>
+        <th>Cantidad</th>
+        <th>Subtotal</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for item in productos %}
+      <tr>
+        <td>{{ item.producto.nombre }}</td>
+        <td>${{ item.producto.precio }}</td>
+        <td>
+          <form method="post" action="{% url 'update_cart' item.producto.id %}"
+                class="d-flex gap-1 align-items-center">
+            {% csrf_token %}
+            <input type="number" name="cantidad" value="{{ item.cantidad }}"
+                   min="1" class="form-control form-control-sm" style="width:70px;">
+            <button type="submit" class="btn btn-sm btn-outline-secondary">
+              Actualizar
+            </button>
+          </form>
+        </td>
+        <td>${{ item.subtotal }}</td>
+        <td>
+          <a href="{% url 'remove_from_cart' item.producto.id %}"
+             class="btn btn-sm btn-danger">Quitar</a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <h4 class="text-end">Total: ${{ total }}</h4>
+
+  {% if user.is_authenticated %}
+    <div class="text-end mt-3">
+      <a href="{% url 'checkout' %}" class="btn"
+         style="background-color:#ff69b4;color:white;border-radius:20px;padding:10px 30px;">
+        Confirmar compra ✅
+      </a>
+    </div>
+  {% else %}
+    <div class="alert alert-info mt-3">
+      <a href="{% url 'login' %}">Inicia sesión</a> para confirmar tu compra.
+    </div>
+  {% endif %}
+
+{% else %}
+  <p>Tu carrito está vacío. <a href="{% url 'home' %}">Ver catálogo</a></p>
+{% endif %}
+
+{% endblock %}

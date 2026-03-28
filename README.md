@@ -63,7 +63,7 @@ Abre http://127.0.0.1:8000/ en tu navegador.
 
 | Rol | Usuario | Contraseña |
 |-----|---------|------------|
-| Administrador | admin | admin1234 |
+| Administrador | host | admin123 |
 | Cliente | cliente | cliente1234 |
 
 ---
